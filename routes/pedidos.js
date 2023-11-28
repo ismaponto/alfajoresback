@@ -44,31 +44,41 @@ router.delete('/:id', async(req, res) => {
 router.post('/', async(req, res) => {
     try {
         const { title, cuantos, recibio_pago, expiredate } = req.body;
-        const idUser = req.user.email._id;
+        const idUser = req.user.email._id; // Assuming you have user information available in the request
 
-        // Verifica que los campos requeridos estén presentes
-        if (!idUser || !title || !recibio_pago || !cuantos || expiredate === undefined) {
-            return res.status(400).json({ error: 'Missing required fields' });
+        // Validate required fields
+        if (!idUser || !title || !cuantos || expiredate === undefined || recibio_pago === undefined) {
+            return res.status(400).json({
+                status: 400,
+                error: 'Missing required fields',
+            });
         }
 
-        // Crea un nuevo objeto Pedido con los datos proporcionados
-        const newpedido = new Pedido({
+        // Create a new pedido object with the provided data
+        const newPedido = new Pedido({
             idUser,
             title,
-            recibio_pago,
             cuantos,
-            completed: false,
-            expiredate
+            recibio_pago,
+            expiredate,
         });
 
-        // Guarda el nuevo pedido en la base de datos
-        const savedPedido = await newpedido.save();
+        // Save the new pedido to the database
+        const savedPedido = await newPedido.save();
 
-        // Responde con el pedido recién creado, incluyendo el ID asignado por MongoDB
-        res.status(201).json(savedPedido);
+        // Respond with the saved pedido
+        res.status(201).json({
+            status: 201,
+            data: savedPedido,
+        });
     } catch (error) {
         console.error('Error creating pedido:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({
+            status: 500,
+            error: 'Internal Server Error',
+        });
     }
 });
+
+module.exports = router;
 module.exports = router
