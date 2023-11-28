@@ -5,9 +5,8 @@ const PedidoSchema = new mongoose.Schema({
     idUser: { type: String, required: true },
     title: { type: String, required: true },
     completed: { type: Boolean, required: true, default: false },
-    pago: { type: Boolean, required: true },
     cuantos: { type: Number, required: true },
-    recibio_pago: { type: String, required: true },
+    recibio_pago: { type: Boolean, required: true },
     expiredate: { type: Date, required: true },
     created_at: { type: Date, default: Date.now }
 });
