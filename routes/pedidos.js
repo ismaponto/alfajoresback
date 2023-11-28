@@ -6,7 +6,9 @@ router.get('/', async(req, res) => {
     try {
         const idUser = req.user.email._id
             // Aquí deberías obtener los datos desde tu fuente de datos(base de datos, API, etc.)
-        const pedidos = await Pedido.find({ idUser }); // Suponiendo que utilizas Mongoose para interactuar con MongoDB
+            // const pedidos = await Pedido.find({ idUser });
+        const pedidos = await Pedido.find({}); // Suponiendo que utilizas Mongoose para interactuar con MongoDB
+        // Suponiendo que utilizas Mongoose para interactuar con MongoDB
         if (pedidos.length === 0) {
             return res
                 .status(200)
