@@ -43,7 +43,7 @@ router.delete('/:id', async(req, res) => {
 
 router.post('/', async(req, res) => {
     try {
-        const { title, cuantos, recibio_pago, expiredate } = req.body;
+        const { title, cuantos, recibio_pago, expiredate, completed } = req.body;
         const idUser = req.user.email._id;
 
         // Verifica que los campos requeridos estén presentes
@@ -57,7 +57,7 @@ router.post('/', async(req, res) => {
             title,
             recibio_pago,
             cuantos,
-            completed: completed !== undefined ? completed : false,
+            completed: false,
             expiredate
         });
 
