@@ -47,7 +47,7 @@ router.post('/', async(req, res) => {
         const idUser = req.user.email._id;
 
         // Verifica que los campos requeridos estén presentes
-        if (!idUser || !title || recibio_pago || cuantos || expiredate === undefined) {
+        if (!idUser || !title || !recibio_pago || !cuantos || expiredate === undefined) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
