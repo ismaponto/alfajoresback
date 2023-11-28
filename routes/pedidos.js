@@ -40,7 +40,46 @@ router.delete('/:id', async(req, res) => {
     }
 });
 
+router.delete('/:id', async(req, res) => {
+    try {
+        const pedidoId = req.params.id;
 
+        // Verifica si el pedido existe
+        const pedido = await Pedido.findById(pedidoId);
+        if (!pedido) {
+            return res.status(404).json({ error: 'Pedido no encontrado' });
+        }
+
+        // Realiza la eliminación del pedido
+        await Pedido.findByIdAndRemove(pedidoId);
+
+        res.status(200).json({ message: 'Pedido eliminado correctamente' });
+    } catch (error) {
+        console.error('Error al eliminar el pedido:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+router.put('/:id/toggle-completed', async(req, res) => {
+    try {
+        const pedidoId = req.params.id;
+
+        // Verifica si el pedido existe
+        const pedido = await Pedido.findById(pedidoId);
+        if (!pedido) {
+            return res.status(404).json({ error: 'Pedido no encontrado' });
+        }
+
+        // Cambia el estado "completed" del pedido
+        pedido.completed = !pedido.completed;
+        await pedido.save();
+
+        res.status(200).json({ message: 'Estado "completed" actualizado correctamente', updatedPedido: pedido });
+    } catch (error) {
+        console.error('Error al actualizar el estado "completed" del pedido:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
 router.post('/', async(req, res) => {
     try {
         const { title, cuantos, recibio_pago, expiredate } = req.body;
@@ -80,5 +119,4 @@ router.post('/', async(req, res) => {
     }
 });
 
-module.exports = router;
 module.exports = router
