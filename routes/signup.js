@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { jsonresponse } = require('../lib/jsonresponse.js');
 const User = require('../schema/user.js');
-const uuid = require('uuid');
-const { confirmEmail } = require('../emailFunctions/emails.js');
 
 function isSafePassword(password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,15}$/;
