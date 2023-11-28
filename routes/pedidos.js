@@ -24,24 +24,6 @@ router.get('/', async(req, res) => {
 
 router.delete('/:id', async(req, res) => {
     try {
-        const pedidos = req.params.id;
-
-        // Intenta encontrar y eliminar el todo por su ID
-        const deletedTodo = await Todo.findByIdAndRemove(pedidos);
-
-        if (!deletedTodo) {
-            return res.status(404).json({ error: 'Todo no encontrado' });
-        }
-
-        res.json({ message: 'pedido eliminado correctamente' });
-    } catch (error) {
-        console.error('Error al eliminar pedido:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
-    }
-});
-
-router.delete('/:id', async(req, res) => {
-    try {
         const pedidoId = req.params.id;
 
         // Verifica si el pedido existe
