@@ -10,7 +10,7 @@ router.get('/', async(req, res) => {
         if (pedidos.length === 0) {
             return res
                 .status(200)
-                .json(jsonresponse(200, [{ title: 'Indica tu primer objetivo y el plazo para definirlo' }]));
+                .json(jsonresponse(200, [{ title: 'carga el primer pedido' }]));
         } else {
             return res.status(200).json(jsonresponse(200, pedidos));
         }
@@ -41,11 +41,11 @@ router.delete('/:id', async(req, res) => {
 
 router.post('/', async(req, res) => {
     try {
-        const { title, completed, expiredate } = req.body;
+        const { title, cuantos, recibio_pago, expiredate } = req.body;
         const idUser = req.user.email._id;
 
         // Verifica que los campos requeridos estén presentes
-        if (!idUser || !title || expiredate === undefined) {
+        if (!idUser || !title || recibio_pago || cuantos || expiredate === undefined) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
@@ -53,6 +53,8 @@ router.post('/', async(req, res) => {
         const newpedido = new Pedido({
             idUser,
             title,
+            recibio_pago,
+            cuantos,
             completed: completed !== undefined ? completed : false,
             expiredate
         });
